@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebUI</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">WebUI</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Main Page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Differential operator</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">???</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Page Four</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Page Five</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3"> <!-- Левый блок -->
+            <div class="fixed-buttons">
+                <button class="btn btn-primary mt-3" onclick="toggleForm('firstFormContainer')">By Array</button>
+                <button class="btn btn-primary mt-3" onclick="toggleForm('secondFormContainer')">By MathFunction
+                </button>
+            </div>
+            <div id="firstFormContainer" style="display: none;">
+                <div class="form-group">
+                    <label for="pointCount">Введите количество точек:</label>
+                    <input type="number" class="form-control" id="pointCount">
+                    <button class="btn btn-primary mt-3" onclick="createTable()">Создать таблицу</button>
+                </div>
+                <div class="row mt-5" id="tableContainer" style="display: none;">
+                    <div class="col-md-12">
+                        <form id="functionForm" method="post" action="ArrayTabulatedFunctionFactory/create">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">X</th>
+                                    <th scope="col" class="text-center">Y</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                </tbody>
+                            </table>
+                            <button class="btn btn-primary" onclick="createFunction()">Создать функцию</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="secondFormContainer" style="display: none;">
+                <form id="ByMathFunctionForm" method="post" action="/ByMathFunction/create">
+                    <div class="form-group">
+                        <label for="functionSelect">Выберите функцию:</label>
+                        <select class="form-control" id="functionSelect" name="Source">
+                            <option value="Unit">Единичная</option>
+                            <option value="Sqr">Квадратичная</option>
+                            <option value="Sin">Синус</option>
+                            <option value="Tan">Тангенс</option>
+                            <option value="Zero">Нулевая</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pointCount">Введите количество точек:</label>
+                        <input type="number" class="form-control" id="SecpointCount" name="count">
+                    </div>
+                    <div class="form-group">
+                        <label for="x1">Введите точку X1:</label>
+                        <input type="text" class="form-control" id="x1" name="xFrom">
+                    </div>
+                    <div class="form-group">
+                        <label for="x2">Введите точку X2:</label>
+                        <input type="text" class="form-control" id="x2" name="xTo">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="createForm()">Создать</button>
+                </form>
+            </div>
+            <table class="table table-bordered zero-table" id="tableContainerResult" style="display: none;">
+                <thead>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                </tr>
+                </thead>
+                <tbody id="first-function"></tbody>
+            </table>
+
+        </div>
+        <div class="col-md-3"> <!-- Средний блок -->
+            <div class="fixed-buttons">
+                <button class="btn btn-primary mt-3" onclick="toggleSecForm('thirdFormContainer')">By Array</button>
+                <button class="btn btn-primary mt-3" onclick="toggleSecForm('fourthFormContainer')">By MathFunction
+                </button>
+            </div>
+            <div id="thirdFormContainer" style="display: none;">
+                <div class="form-group">
+                    <label for="pointCount">Введите количество точек:</label>
+                    <input type="number" class="form-control" id="pointSecCount">
+                    <button class="btn btn-primary mt-3" onclick="createSecTable()">Создать таблицу</button>
+                </div>
+                <div class="row mt-5" id="secondTableContainer" style="display: none;">
+                    <div class="col-md-12">
+                        <form id="secondFunctionForm" method="post" action="SecondArrayTabulatedFunctionFactory/create">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">X</th>
+                                    <th scope="col" class="text-center">Y</th>
+                                </tr>
+                                </thead>
+                                <tbody id="secondTableBody">
+                                </tbody>
+                            </table>
+                            <button class="btn btn-primary" onclick="createSecondFunction()">Создать функцию</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="fourthFormContainer" style="display: none;">
+                <form id="secondByMathFunctionForm" method="post" action="/SecondByMathFunction/create">
+                    <div class="form-group">
+                        <label for="functionSelect">Выберите функцию:</label>
+                        <select class="form-control" id="functionSelect" name="Source">
+                            <option value="Unit">Единичная</option>
+                            <option value="Sqr">Квадратичная</option>
+                            <option value="Sin">Синус</option>
+                            <option value="Tan">Тангенс</option>
+                            <option value="Zero">Нулевая</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pointCount">Введите количество точек:</label>
+                        <input type="number" class="form-control" id="SecpointCount" name="count">
+                    </div>
+                    <div class="form-group">
+                        <label for="x1">Введите точку X1:</label>
+                        <input type="text" class="form-control" id="x1" name="xFrom">
+                    </div>
+                    <div class="form-group">
+                        <label for="x2">Введите точку X2:</label>
+                        <input type="text" class="form-control" id="x2" name="xTo">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="createSecondForm()">Создать</button>
+                </form>
+            </div>
+            <table class="table table-bordered zero-table" id="secondTableContainerResult" style="display: none;">
+                <thead>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                </tr>
+                </thead>
+                <tbody id="second-function"></tbody>
+            </table>
+        </div>
+
+
+        <div class="col-md-6"> <!-- правый блок -->
+            <button class="btn btn-primary mt-3" onclick="submitForm('/operations/add')">Сложить</button>
+            <button class="btn btn-primary mt-3" onclick="submitForm('/operations/subtract')">Вычесть</button>
+            <button class="btn btn-primary mt-3" onclick="submitForm('/operations/division')">Разделить</button>
+            <button class="btn btn-primary mt-3" onclick="submitForm('/operations/multiplication')">Умножить</button>
+            <table class="table table-bordered zero-table" id="thirdTableContainerResult" style="display: none;">
+                <thead>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                </tr>
+                </thead>
+                <tbody id="third-function"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function createTable() {
+        var pointCount = document.getElementById("pointCount").value;
+        var tableBody = document.getElementById("tableBody");
+        tableBody.innerHTML = "";
+        for (var i = 0; i < pointCount; i++) {
+            var row = document.createElement("tr");
+            var xCell = document.createElement("td");
+            var yCell = document.createElement("td");
+            var xInput = document.createElement("input");
+            var yInput = document.createElement("input");
+            xInput.type = "text";
+            xInput.classList.add("form-control");
+            xInput.name = "xValues"; // Set the name attribute for X input
+            xCell.appendChild(xInput);
+            yInput.type = "text";
+            yInput.classList.add("form-control");
+            yInput.name = "yValues"; // Set the name attribute for Y input
+            yCell.appendChild(yInput);
+            row.appendChild(xCell);
+            row.appendChild(yCell);
+            tableBody.appendChild(row);
+        }
+        var tableContainer = document.getElementById("tableContainer");
+        tableContainer.style.display = "block";
+    }
+    function toggleForm(formId) {
+        var firstFormContainer = document.getElementById("firstFormContainer");
+        var secondFormContainer = document.getElementById("secondFormContainer");
+        firstFormContainer.style.display = "none";
+        secondFormContainer.style.display = "none";
+        var formContainer = document.getElementById(formId);
+        formContainer.style.display = "block";
+    }
+    function createFunction() {
+    var form = document.getElementById("functionForm");
+    form.action = "ArrayTabulatedFunctionFactory/create"; // Установите атрибут action на нужный URL
+    form.submit();
+    }
+    function createForm() {
+        var form = document.getElementById("ByMathFunctionForm");
+        form.action = "ByMathFunction/create"; // Установите атрибут action на нужный URL
+        form.submit();
+    }
+
+    function createSecTable() {
+    var pointCount = document.getElementById("pointSecCount").value;
+    var tableBody = document.getElementById("secondTableBody");
+    tableBody.innerHTML = "";
+    for (var i = 0; i < pointCount; i++) {
+        var row = document.createElement("tr");
+        var xCell = document.createElement("td");
+        var yCell = document.createElement("td");
+        var xInput = document.createElement("input");
+        var yInput = document.createElement("input");
+        xInput.type = "text";
+        xInput.classList.add("form-control");
+        xInput.name = "xValues"; // Set the name attribute for X input
+        xCell.appendChild(xInput);
+        yInput.type = "text";
+        yInput.classList.add("form-control");
+        yInput.name = "yValues"; // Set the name attribute for Y input
+        yCell.appendChild(yInput);
+        row.appendChild(xCell);
+        row.appendChild(yCell);
+        tableBody.appendChild(row);
+    }
+    var tableContainer = document.getElementById("secondTableContainer");
+    tableContainer.style.display = "block";
+}
+function submitForm(action) {
+    var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', action);
+
+    document.body.appendChild(form);
+    form.submit();
+}
+function toggleSecForm(formId) {
+    var thirdFormContainer = document.getElementById("thirdFormContainer");
+    var fourthFormContainer = document.getElementById("fourthFormContainer");
+    thirdFormContainer.style.display = "none";
+    fourthFormContainer.style.display = "none";
+    var formContainer = document.getElementById(formId);
+    formContainer.style.display = "block";
+}
+
+function createSecondFunction() {
+    var form = document.getElementById("secondFunctionForm");
+    form.action = "SecondArrayTabulatedFunctionFactory/create"; // Установите атрибут action на нужный URL
+    form.submit();
+}
+
+function createSecondForm() {
+    var form = document.getElementById("secondByMathFunctionForm");
+    form.action = "SecondByMathFunction/create"; // Установите атрибут action на нужный URL
+    form.submit();
+}
+    fetch('/functions')
+        .then(response => response.json())
+        .then(data => {
+            createTableRows(data[0], 'first-function');
+            createTableRows(data[1], 'second-function');
+            createTableRows(data[2], 'third-function');
+        });
+function createTableRows(functionData, containerId) {
+  const container = document.getElementById(containerId);
+  let hasNonZeroXValues = false; // Флаг для проверки наличия ненулевых значений X
+
+  for (let i = 0; i < functionData.length; i += 2) {
+    const x = functionData[i];
+    const y = functionData[i + 1];
+
+    const row = document.createElement('tr');
+    const xCell = document.createElement('td');
+    xCell.textContent = x;
+    const yCell = document.createElement('td');
+    yCell.textContent = y;
+    row.appendChild(xCell);
+    row.appendChild(yCell);
+    container.appendChild(row);
+
+    // Проверка на ненулевые значения X
+    if (x !== 0) {
+      hasNonZeroXValues = true; // Установить флаг, если найдены ненулевые значения X
+    }
+  }
+
+  // Показать таблицу и строки, если есть хотя бы одно ненулевое значение X
+  const table = container.closest('.zero-table');
+  if (hasNonZeroXValues) {
+    table.style.display = "";
+  } else {
+    table.style.display = "none";
+  }
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"/>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"/>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"/>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+</body>
+</html>
