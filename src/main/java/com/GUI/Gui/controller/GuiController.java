@@ -28,7 +28,8 @@ public class GuiController {
         functions.add(getTableValues(pagesController.getFirstFunction()));
         functions.add(getTableValues(pagesController.getSecondFunction()));
         functions.add(getTableValues(pagesController.getThirdFunction()));
-
+        functions.add(getTableValues(pagesController.getDifferFirstFunction()));
+        functions.add(getTableValues(pagesController.getDifferResFunction()));
         return functions;
     }
 
