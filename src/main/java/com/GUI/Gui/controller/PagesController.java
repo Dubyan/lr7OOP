@@ -53,7 +53,7 @@ public class PagesController {
         for (int i = 0; i < xValues.length - 1; i++) {
             for (int j = i + 1; j < xValues.length; j++) {
                 if (xValues[i] >= xValues[j]) {
-                    return "error";
+                    return "errorArrays";
                 }
             }
         }
@@ -66,7 +66,7 @@ public class PagesController {
         for (int i = 0; i < xValues.length - 1; i++) {
             for (int j = i + 1; j < xValues.length; j++) {
                 if (xValues[i] >= xValues[j]) {
-                    return "error";
+                    return "errorArrays.html";
                 }
             }
         }
@@ -107,7 +107,7 @@ public class PagesController {
         for (int i = 0; i < xValues.length - 1; i++) {
             for (int j = i + 1; j < xValues.length; j++) {
                 if (xValues[i] >= xValues[j]) {
-                    return "error";
+                    return "errorArrays";
                 }
             }
         }
@@ -145,7 +145,6 @@ public class PagesController {
     @PostMapping("/operations/add")
     public String addFunction()
     {
-        secondFunction = firstFunction;
         thirdFunction = operations.add(firstFunction, secondFunction);
         return "redirect:/";
     }
